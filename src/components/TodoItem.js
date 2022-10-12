@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../redux/modules/module/todos";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import "../App.css";
 
-const TodoItem = ({ todo, update }) => {
+const TodoItem = ({ todo, update, handleCompleted }) => {
   const [editable, setEditable] = useState(false);
   const [editName, setEditName] = useState(todo.text);
-  const dispatch = useDispatch();
 
-  console.log(todo.text);
+  const dispatch = useDispatch();
 
   const deleteClick = () => {
     dispatch(actionCreators.deleteToDo(todo.id));
@@ -29,10 +29,16 @@ const TodoItem = ({ todo, update }) => {
 
   return (
     <Container onSubmit={handleUpdate}>
+      <CheckCircle
+        className={todo.completed ? "red" : "green"}
+        onClick={handleCompleted}
+      />
       {editable ? (
         <input type="text" value={editName} onChange={onChange} />
       ) : (
-        <h4>{todo.text}</h4>
+        <Todo className={todo.completed ? "done" : "undone"}>
+          <h4 className="todo">{todo.text}</h4>
+        </Todo>
       )}
       <div>
         <UpdateButton onClick={editClick}>
@@ -51,6 +57,21 @@ const Container = styled.form`
   justify-content: space-between;
   align-items: center;
 `;
+
+const CheckCircle = styled.div`
+  width: 25px;
+  height: 25px;
+  border-radius: 16px;
+  border: 1px solid #ced4da;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  cursor: pointer;
+`;
+
+const Todo = styled.div``;
 
 const UpdateButton = styled.button`
   color: blue;
