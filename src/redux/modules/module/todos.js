@@ -1,14 +1,15 @@
 // 액션 타입 작성
 const ADD = "todos/ADD";
 const DELETE = "todos/DELETE";
+const UPDATE = "todos/UPDATE";
 
 // 액션 함수 생성
-let nextId = 1;
+
 const addToDo = (todo) => {
   return {
     type: ADD,
     todo: {
-      id: nextId++,
+      id: new Date().getTime().toString(),
       text: todo.text,
     },
   };
@@ -18,6 +19,13 @@ const deleteToDo = (id) => {
   return {
     type: DELETE,
     id,
+  };
+};
+
+const updateToDo = (todo) => {
+  return {
+    type: UPDATE,
+    todo: todo,
   };
 };
 
@@ -33,9 +41,22 @@ const todosReducer = (state = initialState, action) => {
       return {
         todos: [...state.todos, action.todo],
       };
-    case DELETE:
+    case UPDATE:
+      const updateTodos = state.todos.map((todo) => {
+        if (todo.id === action.todo.id) {
+          return { ...todo, text: action.todo.updateTask };
+        }
+        return todo;
+      });
       return {
-        todos: [...state.todos.filter((todo) => todo.id !== action.id)],
+        ...state,
+        todos: updateTodos,
+      };
+    case DELETE:
+      const newList = state.todos.filter((todo) => todo.id !== action.id);
+      return {
+        ...state,
+        todos: newList,
       };
     default:
       return state;
@@ -45,6 +66,7 @@ const todosReducer = (state = initialState, action) => {
 export const actionCreators = {
   addToDo,
   deleteToDo,
+  updateToDo,
 };
 
 export default todosReducer;

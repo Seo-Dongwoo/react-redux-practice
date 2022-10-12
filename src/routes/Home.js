@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../redux/modules/module/todos";
-import ToDo from "../components/ToDo";
+import TodoItem from "../components/TodoItem";
 import styled from "styled-components";
 
 const Home = () => {
@@ -24,17 +24,21 @@ const Home = () => {
     setText("");
   }
 
+  const update = (id, updateTask) => {
+    dispatch(actionCreators.updateToDo({ id, updateTask }));
+  };
+
   return (
     <Container>
       <Wrapper>
         <h1>Redux TodoList</h1>
         <form onSubmit={onSubmit}>
           <InputBox type="text" value={text} onChange={onChange} />
-          <Button>Add</Button>
+          <Button>추가</Button>
         </form>
         <ul>
           {todos.map((todo) => (
-            <ToDo todo={todo} key={todo.id} />
+            <TodoItem todo={todo} key={todo.id} update={update} />
           ))}
         </ul>
       </Wrapper>
