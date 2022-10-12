@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators } from "../redux/modules/module/todos";
-import TodoItem from "../components/TodoItem";
+import TodoList from "../components/TodoList";
 import styled from "styled-components";
 
 const Home = () => {
@@ -19,14 +19,9 @@ const Home = () => {
     const todo = {
       text: text,
     };
-
     dispatch(actionCreators.addToDo(todo));
     setText("");
   }
-
-  const update = (id, updateTask) => {
-    dispatch(actionCreators.updateToDo({ id, updateTask }));
-  };
 
   return (
     <Container>
@@ -36,11 +31,7 @@ const Home = () => {
           <InputBox type="text" value={text} onChange={onChange} />
           <Button>추가</Button>
         </form>
-        <ul>
-          {todos.map((todo) => (
-            <TodoItem todo={todo} key={todo.id} update={update} />
-          ))}
-        </ul>
+        <TodoList todos={todos} />
       </Wrapper>
     </Container>
   );
