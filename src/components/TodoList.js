@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import TodoItem from "./TodoItem";
-import { actionCreators } from "../redux/modules/module/todos";
+import { update, completed } from "../redux/modules/module/todos";
 import styled from "styled-components";
 
 const TodoList = ({ todos }) => {
   const dispatch = useDispatch();
-  const update = (id, updateTask) => {
-    dispatch(actionCreators.updateToDo({ id, updateTask }));
+
+  const updateTodo = (id, updateTask) => {
+    dispatch(update({ id, updateTask }));
   };
 
   return (
@@ -17,9 +18,9 @@ const TodoList = ({ todos }) => {
           <TodoItem
             todo={todo}
             key={todo.id}
-            update={update}
+            updateTodo={updateTodo}
             completed={todo.completed}
-            handleCompleted={() => dispatch(actionCreators.completeTodo(todo))}
+            handleCompleted={() => dispatch(completed(todo))}
           />
         ))}
       </ul>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionCreators } from "../redux/modules/module/todos";
-import styled, { css } from "styled-components";
+import { remove } from "../redux/modules/module/todos";
+import styled from "styled-components";
 import "../App.css";
 
-const TodoItem = ({ todo, update, handleCompleted }) => {
+const TodoItem = ({ todo, updateTodo, handleCompleted }) => {
   const [editable, setEditable] = useState(false);
   const [editName, setEditName] = useState(todo.text);
 
   const dispatch = useDispatch();
 
   const deleteClick = () => {
-    dispatch(actionCreators.deleteToDo(todo.id));
+    dispatch(remove(todo.id));
   };
 
   const editClick = () => {
@@ -24,12 +24,14 @@ const TodoItem = ({ todo, update, handleCompleted }) => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    update(todo.id, editName);
+
+    updateTodo(todo.id, editName);
   };
 
   return (
     <Container onSubmit={handleUpdate}>
       <CheckCircle
+        type="checkbox"
         className={todo.completed ? "red" : "green"}
         onClick={handleCompleted}
       />
@@ -58,7 +60,7 @@ const Container = styled.form`
   align-items: center;
 `;
 
-const CheckCircle = styled.div`
+const CheckCircle = styled.input`
   width: 25px;
   height: 25px;
   border-radius: 16px;

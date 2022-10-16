@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators } from "../redux/modules/module/todos";
+import { add } from "../redux/modules/module/todos";
 import TodoList from "../components/TodoList";
 import styled from "styled-components";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todosReducer.todos);
+  const todos = useSelector((state) => state.todos);
   const [text, setText] = useState("");
 
   function onChange(e) {
@@ -15,11 +15,7 @@ const Home = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-
-    const todo = {
-      text: text,
-    };
-    dispatch(actionCreators.addToDo(todo));
+    dispatch(add(text));
     setText("");
   }
 
