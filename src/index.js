@@ -14,6 +14,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import logger from "redux-logger";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -24,9 +25,8 @@ const store = configureStore({
       serializableCheck: {
         ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(logger),
 });
-
 const persistor = persistStore(store);
 
 root.render(

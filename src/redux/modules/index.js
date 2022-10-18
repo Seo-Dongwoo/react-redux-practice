@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import todosSlice from "./module/todos";
+import todosSlice from "./module/todos.ts";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 

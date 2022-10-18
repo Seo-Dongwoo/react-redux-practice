@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { remove } from "../redux/modules/module/todos";
+import { remove } from "../redux/modules/module/todos.ts";
 import styled from "styled-components";
 import "../App.css";
 
@@ -36,18 +36,18 @@ const TodoItem = ({ todo, updateTodo, handleCompleted }) => {
         onClick={handleCompleted}
       />
       {editable ? (
-        <input type="text" value={editName} onChange={onChange} />
+        <TodoInput type="text" value={editName} onChange={onChange} />
       ) : (
         <Todo className={todo.completed ? "done" : "undone"}>
-          <h4 className="todo">{todo.text}</h4>
+          <TodoText className="todo">{todo.text}</TodoText>
         </Todo>
       )}
-      <div>
+      <StateBtn>
         <UpdateButton onClick={editClick}>
           {editable ? "업데이트" : "수정"}
         </UpdateButton>
         <DeleteButton onClick={deleteClick}>삭제</DeleteButton>
-      </div>
+      </StateBtn>
     </Container>
   );
 };
@@ -74,6 +74,12 @@ const CheckCircle = styled.input`
 `;
 
 const Todo = styled.div``;
+
+const TodoInput = styled.input``;
+
+const TodoText = styled.h4``;
+
+const StateBtn = styled.div``;
 
 const UpdateButton = styled.button`
   color: blue;
